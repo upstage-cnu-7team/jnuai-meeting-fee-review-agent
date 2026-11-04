@@ -1,0 +1,49 @@
+{
+ "program_name": "동아리 과제 지원비",
+ "meeting_payment_method": "연구비카드",
+ "meeting_required_documents": "영수증, 회의록, 참석자명단(서명 포함)",
+ "meeting_submit_deadline": "사용 후 1주일 이내",
+ "meeting_card_reservation": "최소 사용 1일 전 사업단(062-530-5384) 연락하여 카드 예약 필수 > 오전 대여 → 점심 사용 → 오후 영수증과 함께 반납 > 오후 대여 → 저녁 사용 → 익일 오전 영수증과 함께 반납 > 반납 일정 내 미반납 시 미반납 기간 만큼 대여 불가",
+ "meeting_pay_before_time": "20:00",
+ "meeting_prohibited_merchants": "술집, 주류",
+ "meeting_frequency": "1회/1일 평일 사용가능",
+ "meeting_per_person_limit": 20000,
+ "meal_payment_rule": "회의 후 1시간 이내 카드 결제, 영수증 내역 필수",
+ "meal_minutes_after_meeting": 60,
+ "snack_payment_rule": "회의 전 30분 이내 카드 결제, 영수증 내역 필수",
+ "snack_minutes_before_meeting": 30,
+ "min_meeting_minutes": 60,
+ "class_time_rule": "회의 참여인원의 교과목 수강 시간 내 회의 불가(휴강이더라도 불가)",
+ "allowed_region": "광주광역시 북구",
+ "prohibited_regions": [
+  "동구",
+  "서구",
+  "남구",
+  "광산구"
+ ],
+ "receipt_rule": "승인번호가 정확히 표기된 영수증(원본), 매출전표만 인정되며 간이영수증은 인정되지 않음.",
+ "general_caution": "기타 용도가 명확하지 않은 내용에 대한 집행에 대해서는 반드시 사전에 문의 후 집행할 것. (동아리 과제 지원 목적에 부합하지 않을 경우, 지원 불가 또는 환수조치 할 수 있음.)",
+ "form_fields": [
+  "팀명",
+  "회의명",
+  "회의일시",
+  "회의장소",
+  "회의내용",
+  "참석자 명단",
+  "소속",
+  "학번",
+  "이름",
+  "서명",
+  "영수증",
+  "사용 비용",
+  "결제자"
+ ],
+ "form_place_guide": "00대 0호관 000호(카페/식당 불가)",
+ "form_signature_guide": "자필서명/전자서명 불가, ※워드작성 서명",
+ "form_notice": [
+  "회의내용은 구체적으로, 상세히 작성하시기 바랍니다.",
+  "회의 장소는 식당으로 기재하지 마시고, 연구실이나, 회의실, 실험실 등으로 기재하시기 바랍니다.",
+  "회의비 지출은 반드시 카드로 결제하여 사용하시기 바랍니다.(간이영수증 불인정, 주말 사용 불가)",
+  "일반식당 이외의 술집 등의 상호 및 주류 포함 결제 내역은 지원되지 않으니 유의바랍니다."
+ ]
+}

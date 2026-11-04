@@ -1,0 +1,237 @@
+program: 인공지능혁신융합대학사업단 동아리 회의비
+status: confirmed
+version: 2  # v2 (2026-11-02): R21 영수증 품목 표기 추가 (종희 요청)
+source_file: 별첨1+1-1_회의비_지침과_양식.hwp
+extracted_by: Upstage information-extract
+conditions:
+- id: R01
+  name: 영수증 첨부, 금액 > 0
+  type: receipt_attached
+  by: 코드
+  severity: 보완필요
+  params: {}
+  source:
+    meeting_required_documents: 영수증, 회의록, 참석자명단(서명 포함)
+  origin: 지침 추출
+- id: R02
+  name: 연구비카드 매출전표 (간이·현금영수증 불가)
+  type: card_slip
+  by: 코드
+  severity: 부적합
+  params:
+    card_word: 연구비카드
+    # 실제 연구비카드 영수증 표기 — 종희 확인(2026-10-31): 성장통 제출본 영수증이 실제 연구비카드 결제다.
+    #   카드번호 5330-1481-****-…, 카드명 '광주신용', 매입사 비씨카드, 승인번호 8자리. '연구비카드' 글자는 찍히지 않는다.
+    card_words:
+    - 광주신용
+    - 광주
+    - 연구비
+    card_bins:
+    - '53301481'
+    reject_words:
+    - 간이영수증
+    - 현금영수증
+    - 현금
+  source:
+    meeting_payment_method: 연구비카드
+    receipt_rule: 승인번호가 정확히 표기된 영수증(원본), 매출전표만 인정되며 간이영수증은 인정되지 않음.
+  origin: 지침 추출
+- id: R03
+  name: 승인번호 표기
+  type: approval_number
+  by: 코드
+  severity: 보완필요
+  params: {}
+  source:
+    receipt_rule: 승인번호가 정확히 표기된 영수증(원본), 매출전표만 인정되며 간이영수증은 인정되지 않음.
+  origin: 지침 추출
+- id: R04
+  name: 회의일 = 영수증 거래일
+  type: same_date
+  by: 코드
+  severity: 부적합
+  params: {}
+  source:
+    meal_payment_rule: 회의 후 1시간 이내 카드 결제, 영수증 내역 필수
+    snack_payment_rule: 회의 전 30분 이내 카드 결제, 영수증 내역 필수
+  origin: 지침 추출
+- id: R05
+  name: 평일 사용 (주말 불가)
+  type: weekday_only
+  by: 코드
+  severity: 부적합
+  params: {}
+  source:
+    meeting_frequency: 1회/1일 평일 사용가능
+    form_notice: &id001
+    - 회의내용은 구체적으로, 상세히 작성하시기 바랍니다.
+    - 회의 장소는 식당으로 기재하지 마시고, 연구실이나, 회의실, 실험실 등으로 기재하시기 바랍니다.
+    - 회의비 지출은 반드시 카드로 결제하여 사용하시기 바랍니다.(간이영수증 불인정, 주말 사용 불가)
+    - 일반식당 이외의 술집 등의 상호 및 주류 포함 결제 내역은 지원되지 않으니 유의바랍니다.
+  origin: 지침 추출
+- id: R06
+  name: 20:00 이전 결제
+  type: pay_before
+  by: 코드
+  severity: 부적합
+  params:
+    time: '20:00'
+  source:
+    meeting_pay_before_time: '20:00'
+  origin: 지침 추출
+- id: R07
+  name: 술집·주류 결제 불가
+  type: no_alcohol
+  by: Solar
+  severity: 부적합
+  params:
+    words: 술집, 주류
+  source:
+    meeting_prohibited_merchants: 술집, 주류
+    form_notice: *id001
+  origin: 지침 추출
+- id: R08
+  name: 1인당 20,000원 이내
+  type: per_person_limit
+  by: 코드
+  severity: 부적합
+  params:
+    limit: 20000
+  source:
+    meeting_per_person_limit: 20000
+  origin: 지침 추출
+- id: R09
+  name: 식비는 회의 후 / 다과비는 회의 전 정해진 시간 안에 결제
+  type: pay_window
+  by: Solar+코드
+  severity: 부적합
+  params:
+    meal_after: 60
+    snack_before: 30
+  source:
+    meal_payment_rule: 회의 후 1시간 이내 카드 결제, 영수증 내역 필수
+    meal_minutes_after_meeting: 60
+    snack_payment_rule: 회의 전 30분 이내 카드 결제, 영수증 내역 필수
+    snack_minutes_before_meeting: 30
+  origin: 지침 추출
+- id: R10
+  name: 회의 60분 이상 운영
+  type: min_meeting
+  by: 코드
+  severity: 부적합
+  params:
+    minutes: 60
+  source:
+    min_meeting_minutes: 60
+  origin: 지침 추출
+- id: R11
+  name: '가맹점 광주광역시 북구 (불가: 동구, 서구, 남구, 광산구)'
+  type: region
+  by: 코드
+  severity: 부적합
+  params:
+    allowed: 광주광역시 북구
+    prohibited: &id002
+    - 동구
+    - 서구
+    - 남구
+    - 광산구
+  source:
+    allowed_region: 광주광역시 북구
+    prohibited_regions: *id002
+  origin: 지침 추출
+- id: R12
+  name: 회의 장소 카페·식당 불가 (연구실·회의실·실험실 등)
+  type: place_not_food
+  by: Solar
+  severity: 부적합
+  params: {}
+  source:
+    form_place_guide: 00대 0호관 000호(카페/식당 불가)
+    form_notice: *id001
+  origin: 지침 추출
+- id: R13
+  name: 회의내용 구체적·상세
+  type: content_specific
+  by: Solar
+  severity: 보완필요
+  params: {}
+  source:
+    form_notice: *id001
+  origin: 지침 추출
+- id: R14
+  name: 참석자 전원 서명 (자필·전자, 워드 작성 불가)
+  type: attendee_signatures
+  by: Extract+코드
+  severity: 보완필요
+  params: {}
+  source:
+    # Upstage 추출이 '자필서명/전자서명 불가, ※워드작성 서명'으로 잘못 합쳐 읽어서 양식 원문으로 고침 (2026-10-31)
+    form_signature_guide: 자필서명/전자서명, ※워드작성 서명 불가
+    meeting_required_documents: 영수증, 회의록, 참석자명단(서명 포함)
+  origin: 지침 추출
+- id: R15
+  name: 사용 비용 칸 = 영수증 합계
+  type: amount_matches
+  by: 코드
+  severity: 보완필요
+  params: {}
+  source:
+    form_fields: &id003
+    - 팀명
+    - 회의명
+    - 회의일시
+    - 회의장소
+    - 회의내용
+    - 참석자 명단
+    - 소속
+    - 학번
+    - 이름
+    - 서명
+    - 영수증
+    - 사용 비용
+    - 결제자
+  origin: 지침 추출
+- id: R16
+  name: 결제자 소속·이름·서명
+  type: payer_signature
+  by: Extract+코드
+  severity: 보완필요
+  params: {}
+  source:
+    form_fields: *id003
+  origin: 지침 추출
+- id: R17
+  name: 사용일로부터 7일째 되는 날 18:00 전까지 제출
+  type: submit_within_days
+  by: 코드(접수 일시)
+  severity: 보완필요
+  params:
+    days: 7
+    deadline_time: '18:00'
+  source:
+    meeting_submit_deadline: 사용 후 1주일 이내
+  origin: 지침 추출 + 담당자 수정
+  staff_note: 지침 '사용 후 1주일 이내' → 7일째 되는 날 18시 이전까지 (담당자 의견)
+- id: R21
+  name: 영수증 메뉴·품목 내역 표기
+  type: receipt_items
+  by: 코드
+  severity: 보완필요
+  params: {}
+  source:
+    meeting_payment_after: 회의 후 1시간 이내 카드 결제, 영수증 내역 필수
+  origin: 담당자 추가
+  staff_note: 품목이 안 보이면 확인필요(학생 회신에 안 넣음). 2026-11-02 종희
+staff_added: []
+removed:
+- id: R18
+  name: 1회/1일 사용
+  reason: 담당자 의견으로 제외 (2026-10-28)
+- id: R19
+  name: 교과목 수강 시간 내 회의 불가
+  reason: 담당자 의견으로 제외 (2026-10-28)
+- id: R20
+  name: 카드 사용 1일 전 예약·반납
+  reason: 담당자 의견으로 제외 (2026-10-28)
+confirmed_note: '2026-10-28 담당자 의견 반영: R18 1회/1일, R19 교과목 수강 시간, R20 카드 예약·반납 제외 / R17 기한 수정'

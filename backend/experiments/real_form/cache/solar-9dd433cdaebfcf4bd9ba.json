@@ -1,0 +1,1 @@
+{"place": {"reason": "회의 장소가 카페(스타벅스)로 기재되어 있어 회의 장소로 부적합하다.", "decision": "violation"}, "alcohol": {"reason": "품목에 주류가 포함되어 있지 않고 가맹점도 분식점으로 술집이 아니다.", "decision": "ok"}, "content": {"reason": "회의 주제, 지난주 인터뷰 결과, MVP 범위 확정, 역할 분담, 향후 과제와 일정까지 구체적으로 기재되어 있다.", "decision": "ok"}, "expense_kind": {"reason": "김밥, 라면, 떡볶이 등 식사류로 구성되어 있어 식비에 해당한다.", "kind": "식비"}}

@@ -1,0 +1,119 @@
+# 팀 목록 (2026-10-29, 사업단 보드 사진 + 종희 정리)
+#
+# - program: wemeet(위밋) · club(동아리) · capstone(캡스톤) · aim(AIM) · hackathon(해커톤)
+# - 위밋과 동아리는 같은 팀 목록이다(보드 두 장 동일). 같은 팀이 프로그램별로 따로 제출한다.
+# - 이름이 같은 팀이 여러 프로그램에 있다(테라바이트: AIM·해커톤·위밋/동아리, AI-GO: 캡스톤·위밋/동아리).
+#   → 팀명만으로는 프로그램을 정할 수 없다. 담당자 메일함 + 제목·본문의 프로그램 단어로 정한다.
+# - 비교 키는 tools/team_keys.py가 팀명에서 자동으로 만든다(직접 적지 않는다).
+#     · 소문자로 바꾸고 공백 _ - , . 를 지운다. 괄호 안 이름은 따로 하나의 이름으로 본다. 예) AI-GO(아이고) → aigo, 아이고
+#     · 한글이 든 이름은 6글자 이상이면 4글자씩 연속 조각, 영어 이름은 8글자 이상이면 6글자씩 연속 조각도 키로 쓴다.
+#       그보다 짧으면 전체 이름만 쓴다.
+# - aliases: 줄임말. 종희가 직접 넣는다(비어 있으면 없음).
+# - 메일 필터(Power Automate)는 첨부가 있는 메일 중 키가 하나라도 들어 있으면 통과시킨다. 문맥어 조건은 없다(2026-10-29 결정).
+#   관계없는 메일은 서버가 회의록 양식 여부를 보고 버린다.
+# - strict: true → 흔한 단어·짧은 이름. 필터에는 영향 없음. 서버가 팀을 정할 때 이 이름만 맞은 경우 '확인필요'로 둔다.
+# - 보드에서 줄이 그어진 팀(DNA(Drone&AI), Quant-Us, IEAT(아이아이))은 활동 종료라 뺐다(종희 확인).
+#
+# 프로그램 정하기 (2026-10-31 종희 확인)
+#   회의비 증빙 양식은 모든 프로그램이 같고, 문서 맨 위 별첨 제목의 단어만 다르다.
+#   1) 별첨 제목 단어(form_titles): 캡스톤 → capstone, 동아리 → club, WE-Meet → wemeet
+#   2) AIM 챌린지·해커톤은 제목에 프로그램 단어가 없다(그냥 '회의비 증빙'). 둘 다 동아리 담당자 메일함으로 온다.
+#      → 제목 단어가 없는 양식은 AIM·해커톤 팀 목록에서 팀명으로 정한다.
+#      → 두 곳에 다 있는 팀(지금은 테라바이트뿐)은 회의록 참석자 이름을 팀원 명단(members)과 대조해 정한다.
+#      → 명단이 없거나 대조가 안 되면 '프로그램 미확정'으로 띄우고 담당자가 고른다.
+#   3) 그래도 모르면 담당자 메일함(mailboxes)과 메일 제목·본문의 프로그램 단어(mail_words)로 좁힌다.
+#   메일 필터(Power Automate)는 '우리 서비스로 보낼 메일인가'만 보고, 프로그램 구분은 서버가 한다.
+#   회의비 증빙 양식이 아닌 첨부만 있는 메일은 서버가 저장하지 않고 버린다(사업단 보안 우려).
+
+# 서버 판단용(필터에는 안 씀): 회의비 증빙 메일인지 볼 때 참고
+context_words: [회의, 증빙, 영수증, 회의록, 회의비]
+
+# 담당자 메일함 → 맡은 프로그램 (2026-10-29 종희 확인)
+mailboxes:
+  wemeet_manager: [wemeet, capstone]
+  club_manager: [club, aim, hackathon]
+
+# 회의록 양식 별첨 제목에 들어가는 프로그램 단어 (2026-10-31 종희 확인)
+form_titles:
+  capstone: {words: [캡스톤디자인, 캡스톤], confirmed: true}   # '[별첨 1-1.] 캡스톤디자인 회의비 지출 증빙'
+  club: {words: [동아리], confirmed: true}
+  wemeet: {words: [WE-Meet, 위밋, WEMEET], confirmed: true}
+  # aim, hackathon: 제목 단어 없음 → 팀명·팀원 명단으로 구분 (title_less_programs)
+title_less_programs: [aim, hackathon]
+
+mail_words:
+  wemeet: [위밋, wemeet]
+  club: [동아리]
+  capstone: [캡스톤]
+  aim: [aim, 에임]
+  hackathon: [해커톤]
+
+programs:
+  wemeet: &shared_teams
+    - {name: "ACK", aliases: [], strict: true}
+    - {name: "AfterandAfter", aliases: []}
+    - {name: "AI-dle", aliases: [], strict: true}
+    - {name: "AI-GO(아이고)", aliases: [], strict: true}
+    - {name: "AILOG(엘로그)", aliases: []}
+    - {name: "AIM(AI Marketing)", aliases: [], strict: true}
+    - {name: "Creeper", aliases: []}
+    - {name: "DeepDive(딥다이브)", aliases: []}
+    - {name: "EPOCH", aliases: [], strict: true}
+    - {name: "IU(Eye With You)", aliases: [], strict: true}
+    - {name: "METRO", aliases: [], strict: true}
+    - {name: "Output( )", aliases: [], strict: true}
+    - {name: "RADIO", aliases: [], strict: true}
+    - {name: "TWBD", aliases: []}
+    - {name: "unAIted(유나이티드)", aliases: [], strict: true}
+    - {name: "VCCC", aliases: []}
+    - {name: "너만보인단말이야", aliases: []}
+    - {name: "돌돌이", aliases: [], strict: true}
+    - {name: "소보로", aliases: [], strict: true}
+    - {name: "소인배", aliases: [], strict: true}
+    - {name: "시냅스", aliases: [], strict: true}
+    - {name: "오야지치", aliases: []}
+    - {name: "으라차차아이(AI)키키", aliases: []}
+    - {name: "의라차차", aliases: []}
+    - {name: "이AI어검", aliases: []}
+    - {name: "전자파", aliases: [], strict: true}
+    - {name: "전지전능(全智電能)", aliases: [], strict: true}
+    - {name: "크롤러", aliases: [], strict: true}
+    - {name: "클래시파이(Classif-AI)", aliases: []}
+    - {name: "테라바이트", aliases: [], strict: true}
+    - {name: "파이아이", aliases: []}
+    - {name: "팩토리얼", aliases: [], strict: true}
+    - {name: "Agent-X", aliases: []}
+    - {name: "NoBrains", aliases: []}
+    - {name: "Null", aliases: [], strict: true}
+    - {name: "OverRide", aliases: [], strict: true}
+    - {name: "가치가", aliases: [], strict: true}
+    - {name: "모여봐요 감자의 숲", aliases: []}
+    - {name: "산만TEC", aliases: []}
+    - {name: "성장통", aliases: [], strict: true}
+    - {name: "화성인", aliases: [], strict: true}
+  club: *shared_teams
+
+  capstone:
+    - {name: "AI-GO(아이고)", aliases: [], strict: true}
+    - {name: "AI 편식연구소", aliases: []}
+    - {name: "RUNMATE", aliases: []}
+    - {name: "YEH", aliases: [], strict: true}
+    - {name: "과전압", aliases: [], strict: true}
+    - {name: "번역기 승진 위원회", aliases: []}
+    - {name: "이지선다", aliases: [], strict: true}
+    - {name: "행복하자", aliases: [], strict: true}
+    - {name: "훈민정지", aliases: []}
+
+  aim:
+    - {name: "AIBara", aliases: []}
+    - {name: "Yeah,Buddy", aliases: []}
+    - {name: "테라바이트", aliases: [], strict: true, members: []}
+
+
+
+  hackathon:
+    - {name: "대인배", aliases: [], strict: true}
+    - {name: "위드유", aliases: [], strict: true}
+    - {name: "테라바이트", aliases: [], strict: true, members: []}
+    - {name: "마니오", aliases: []}
+    - {name: "에융", aliases: [], strict: true}

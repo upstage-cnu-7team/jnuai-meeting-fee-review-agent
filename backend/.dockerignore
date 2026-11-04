@@ -1,0 +1,8 @@
+.venv
+.env
+data
+cache
+experiments
+samples
+tests
+**/__pycache__

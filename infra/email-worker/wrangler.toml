@@ -1,0 +1,9 @@
+# 배포: npx wrangler@4 deploy  (처음 한 번 npx wrangler@4 login)
+# 비밀 키: npx wrangler@4 secret put INTAKE_SECRET  (backend/.env 의 INTAKE_SECRET 과 같은 값)
+name = "meetingfee-intake"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+INTAKE_URL = "https://api.jnuai-meetingfee.com/api/intake/mail"
+BACKUP_TO = ""  # 비워 둠(2026-10-31): 메일 원본·첨부·결과는 서버 디스크(data/, Docker 영구 볼륨)에 저장한다. 개인 Gmail 사본은 두지 않음
